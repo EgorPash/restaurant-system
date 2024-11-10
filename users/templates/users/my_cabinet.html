@@ -1,0 +1,108 @@
+{% extends 'service/base.html'%}
+{% load static %}
+{% block content %}
+
+<section class="py-5 text-center container">
+    <div class="row py-lg-5">
+        <div class="col-lg-12 col-md-8 mx-auto">
+            <h1 class="fw-light">ЛИЧНЫЙ КАБИНЕТ</h1>
+            <p class="lead text-body-secondary">ресторан СИНЬОР ПОМИДОР</p>
+            <br>
+            <p>Здесь вы можете управлять своими заказами, изменять ваши контактные данные и изменять пароль.</p>
+
+            <hr class="featurette-divider">
+
+            <div>
+                {% if user.is_authenticated %}
+                <img src="{{ user.avatar }}" class="rounded-circle" alt="User Avatar" width="200" height="200">
+                <p>Пользователь: {{ user.email }}</p>
+                {% endif %}
+            </div>
+
+            <p>
+                {% if user.is_authenticated %}
+            <form action="{% url 'users:logout' %}" method="post">
+                {% csrf_token %}
+                <button class='btn btn-warning' type="submit">Выход</button>
+                <a href="{% url 'users:profile' %}" class="btn btn-secondary ms-2 border-warning">Редактировать
+                    профиль</a>
+            </form>
+
+            {% else %}
+            <a href="{% url 'users:login' %} " class="btn btn-secondary ms-2 border-warning">Авторизация</a>
+
+            <a href="{% url 'users:registration' %}" class="btn btn-secondary ms-2 border-warning">Регистрация</a>
+            {% endif %}
+            </p>
+
+            <hr class="featurette-divider">
+
+
+            <div class="row text-center">
+                <div class="row text-center">
+                    {% if page_obj.paginator.num_pages == 1 and page_obj|length == 0 %}
+                    <h2 class="mb-4">Список бронирований пуст</h2>
+                    {% else %}
+                    <h2 class="mb-4">Список бронирований</h2>
+                    {% for obj in page_obj %}
+                    <div class="col-4">
+                        <div class="card mb-4 box-shadow">
+                            {% if user.is_authenticated or user.is_superuser %}
+                            <div class="card-header">
+                                <h6 class="my-0 font-weight-italic">{{ obj.user }}</h6>
+                            </div>
+                            {% endif %}
+                            <div class="card-header">
+                                <h4 class="my-0 font-weight-normal">{{ obj.table }}</h4>
+                            </div>
+                            <div class="card-body">
+                                {% for time in obj.order_time.all %}
+                                <p class="mt-3 mb-4 text-start m-3">Время бронирования: {{ time }}</p>
+                                {% endfor %}
+                                <div class="btn-group">
+                                    <a type="button" class="btn btn-secondary border-warning"
+                                       href="{% url 'service:order_detail' obj.pk %}">Подробнее</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    {% endif %}
+                    {% if user.is_authenticated %}
+                    <div class="col text-center">
+                        <a type="button" class="btn btn-secondary ms-2 border-warning"
+                           href="{% url 'service:table_list'%}">
+                            Перейти на страницу бронирований
+                        </a>
+                    </div>
+                    {% endif %}
+
+                    {% if page_obj.paginator.num_pages > 1 %}
+                    <div id="pages" align="center">
+                        {% if page_obj.has_previous %}
+                        <a class='btn btn-secondary border-warning' href="?page={{ page_obj.previous_page_number }}">Предыдущая</a>
+                        {% endif %}
+
+                        <span class="current">
+                Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}.
+            </span>
+
+                        {% if page_obj.has_next %}
+                        <a class='btn btn-secondary border-warning' href="?page={{ page_obj.next_page_number }}">Следующая</a>
+                        {% endif %}
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <hr class="featurette-divider">
+
+        </div>
+
+    </div>
+    <a class="btn btn-secondary border-warning" href="{% url 'service:index' %}">Вернуться на главную страницу
+        &raquo;</a>
+
+</section>
+
+{% endblock %}

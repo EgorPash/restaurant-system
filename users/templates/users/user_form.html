@@ -1,0 +1,32 @@
+{% extends 'service/base.html' %}
+
+{% block content %}
+<div class="container mt-5 mb-5 offset-md-4">
+    <form class="row mx-auto" method="post" enctype="multipart/form-data">
+        <div class="col-6">
+            <div class="card text-center">
+                <div class="card-header">
+                    СИНЬОР ПОМИДОР
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">Редактирование профиля</h5>
+
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit" class="btn btn-warning">
+                        {% if object %}
+                        Подтвердить изменения
+                        {% endif %}
+                    </button>
+
+                </div>
+                <div class="card-footer text-body-secondary">
+                    <a class="btn btn-secondary" href="{% url 'service:index' %}">Вернуться на главную страницу &raquo;</a>
+                </div>
+            </div>
+        </div>
+
+
+    </form>
+</div>
+{% endblock %}

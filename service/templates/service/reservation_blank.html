@@ -1,0 +1,62 @@
+{% extends 'service/base.html'%}
+
+{% block content %}
+
+
+<div class="container mt-5">
+    <hr class="featurette-divider">
+    <h1 class="display-4 text-center">Доступные для бронирования столики</h1>
+    <p class="lead text-center">Здесь можно управлять бронированиями столиков, просматривать историю заказов.</p>
+    <hr class="featurette-divider">
+    <div class="row">
+        {% if user.is_authenticated or user.is_superuser %}
+        {% for obj in object_list %}
+        <div class="col-3">
+
+            <div class="card mb-4 box-shadow d-flex align-items-stretch">
+                <div class="card-header">
+                    <h4 class="my-0 font-weight-normal">Номер столика: {{ obj.number }}</h4>
+                </div>
+                <div class="card-header">
+                    <h6 class="my-0 font-weight-normal">Количество мест: {{ obj.seats }}</h6>
+                </div>
+                <div class="card-header">
+                    <h6 class="my-0 font-weight-normal">Время доступное для бронирования: </h6>
+                </div>
+                {% for time in obj.times.all %}
+                <div class="card-body">
+                    <h6 class="my-0 font-weight-italic">{{ time }}</h6>
+                </div>
+                {% endfor %}
+                <a class='btn btn-secondary' href="{% url 'service:order_create' obj.pk %}">Забронировать</a>
+
+
+            </div>
+
+        </div>
+         {% endfor %}
+         {% endif %}
+    </div>
+
+
+    <hr class="featurette-divider">
+
+    {% if page_obj.paginator.num_pages > 1 %}
+    <div id="pages" align="center" class="mb-4 mt-3">
+        {% if page_obj.has_previous %}
+        <a class='btn btn-secondary' href="?page={{ page_obj.previous_page_number }}">Предыдущая</a>
+        {% endif %}
+
+        <span class="current">
+                Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}.
+            </span>
+
+        {% if page_obj.has_next %}
+        <a class='btn btn-secondary' href="?page={{ page_obj.next_page_number }}">Следующая</a>
+        {% endif %}
+    </div>
+    {% endif %}
+
+    <hr class="featurette-divider">
+</div>
+    {% endblock%}

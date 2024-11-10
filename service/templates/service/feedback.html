@@ -1,0 +1,47 @@
+{% extends 'service/base.html' %}
+
+{% block content %}
+
+<br>
+<br>
+<br>
+
+<div class="container mt-5">
+
+    <hr class="featurette-divider">
+    <div class="card">
+        <div class="card-header text-center">
+            <h2 class="featurette-heading fw-normal lh-1">Ваше мнение важно для улучшения сервиса <br>
+            </h2>
+        </div>
+    </div>
+
+    <div class="card-body">
+        <form method="post" action="" class="form-floating">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="name">Имя</label>
+                <input type="text" name="name" class="form-control" id="name" placeholder="Ваше имя"
+                       required>
+            </div>
+            <div class="mb-3">
+                <label for="phone">Телефон</label>
+                <input type="text" name="phone" class="form-control" id="phone"
+                       placeholder="Контактный телефон" required>
+            </div>
+            <div class="mb-3">
+                <label for="message">Сообщение</label>
+                <textarea type="text" name="message" class="form-control" id="message"
+                          placeholder="Введите текст сообщения" required></textarea>
+            </div>
+            <hr class="featurette-divider">
+            <div class="col text-center">
+                <a class="btn btn-warning" href="#">Отправить</a>
+                <a class="btn btn-secondary" href="{% url 'service:index' %}">Вернуться на главную страницу</a>
+            </div>
+        </form>
+    </div>
+    <hr class="featurette-divider">
+</div>
+
+{% endblock %}

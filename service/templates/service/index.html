@@ -1,0 +1,75 @@
+{% extends 'service/base.html'%}
+{% load static %}
+{% block content %}
+
+{% include 'service/includes/carusel.html'%}
+
+<!-- Marketing messaging and featurettes
+================================================== -->
+<!-- Wrap the rest of the page in another container to center all the content. -->
+
+<div class="container marketing mt-5">
+
+
+    <!-- START THE FEATURETTES -->
+
+    <hr class="featurette-divider">
+
+    <div class="row featurette">
+        <div class="col-md-12">
+            <h2 class="featurette-heading fw-normal lh-1">История пиццерии 'Синьор Помидор'". <span
+                    class="text-body-secondary">И не только...</span></h2>
+            <p class="lead">Пиццерия 'Синьор Помидор' известна в Хабаровске с 2018 года. Но появилась она в
+                Хабаровске задолго до этого.</p>
+        <a class="btn btn-secondary" href="{% url 'service:about_us' %}">Подробнее..</a>
+        </div>
+    </div>
+
+    <hr class="featurette-divider">
+
+    <div class="row featurette">
+        <div class="col-md-12 order-md-2">
+            <h2 class="featurette-heading fw-normal lh-1">Перечень услуг, предоставляемых пиццерией "Синьор Помидор" <span
+                    class="text-body-secondary">Наша команда сделает все возможное.</span></h2>
+            <p class="lead">Наша пиццерия - не просто красивое и уютное место, где Вас вкусно накормят. У нас Вы можете:</p>
+            <ul>
+                <li>Заказать столик удобным Вам способом (лично, онлайн, по телефону и т.д.)</li>
+                <li>Забронировать столик на удобное для вас время и дату</li>
+                <li>Получить скидки и бонусы для постоянных клиентов</li>
+                <li>Заказать доставку готовых блюд</li>
+                <li>Корпоративным клиентам оказываются услуги по организации питания сотрудников</li>
+            </ul>
+            <a class="btn btn-secondary" href="#">Подробнее...</a>
+        </div>
+    </div>
+
+    <hr class="featurette-divider">
+
+    <div class="row featurette">
+        <div class="col-md-12">
+            <h2 class="featurette-heading fw-normal lh-1">Вы можете оставить отзыв о нас прямо здесь. <span
+                    class="text-body-secondary">Ваше мнение важно для улучшения сервиса.</span></h2>
+            <p class="lead">Для обратной связи нужно заполнить небольшую форму</p>
+            <a class="btn btn-secondary" href="{% url 'service:feedback' %}">Заполнить форму &raquo;</a>
+        </div>
+    </div>
+
+    <hr class="featurette-divider">
+
+    <div class="row featurette">
+        <div class="col-md-12">
+            <h2 class="featurette-heading fw-normal lh-1">Наши контакты. <br> <span class="text-body-secondary">Вы можете связаться с нами следующими способами:</span>
+            </h2>
+            <p class="lead"></p>
+            <ul>
+                <li>Телефон: +7 (421) 273-01-02</li>
+                <li>Адрес: г.Хабаровск, ул. Стрельникова, д. 16</li>
+            </ul>
+        </div>
+    </div>
+
+    <hr class="featurette-divider">
+
+    <!-- /END THE FEATURETTES -->
+</div>
+{% endblock%}
