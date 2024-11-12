@@ -1,0 +1,23 @@
+[
+    {
+        "model": "service.timesection",
+        "pk": 1,
+        "fields": {
+            "time_section": "08:00-09:00"
+        }
+    },
+    {
+        "model": "service.timesection",
+        "pk": 2,
+        "fields": {
+            "time_section": "09:00-10:00"
+        }
+    },
+    {
+        "model": "service.timesection",
+        "pk": 3,
+        "fields": {
+            "time_section": "10:00-11:00"
+        }
+    }
+]

@@ -1,4 +1,4 @@
-from django.core.management import BaseCommand
+from django.core.management import BaseCommand, call_command
 
 from service.models import Table, TimeSection
 
@@ -6,6 +6,8 @@ from service.models import Table, TimeSection
 class Command(BaseCommand):
 
     def handle(self, *args, **kwargs):
+        call_command('loaddata', 'timesection.json')
+
         tables_list = [
             {"number": 1, "seats": 4},
             {"number": 2, "seats": 2},
