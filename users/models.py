@@ -10,7 +10,7 @@ class User(AbstractUser):
         max_length=50,
         verbose_name="Адрес электронной почты",
         unique=True,
-        help_text='Ведите адрес электронной почты'
+        help_text='Введите адрес электронной почты'
     )
 
     avatar = models.ImageField(
