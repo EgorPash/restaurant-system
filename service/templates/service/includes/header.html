@@ -22,6 +22,10 @@
                         <a class="nav-link active" aria-current="page" href="{% url 'service:table_list' %}">Бронирование столика</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="{% url 'service:table_gallery' %}">Столики</a>
+                    </li>
+
+                    <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="{% url 'users:logout' %}">Выйти</a>
                     </li>
                     <li class="nav-item">
@@ -30,6 +34,9 @@
                     {% else %}
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="{% url 'users:register' %}">Зарегистрироваться</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="{% url 'service:table_gallery' %}">Столики</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="{% url 'users:login' %}">Войти</a>

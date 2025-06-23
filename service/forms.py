@@ -6,7 +6,7 @@ from service.models import Order, Table
 class OrderForm(forms.ModelForm):
     class Meta:
         model = Order
-        fields = ['order_time']
+        fields = ['order_time', 'reservation_date']
 
     def __init__(self, *args, **kwargs):
         table_pk = kwargs.pop('table_pk')

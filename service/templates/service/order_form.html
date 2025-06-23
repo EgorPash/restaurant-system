@@ -1,37 +1,45 @@
-{% extends 'service/base.html'%}
+{% extends 'service/base.html' %}
 
 {% block content %}
-<div  class="container mt-5" >
+<div class="container mt-5">
     <h1 class="display-4 text-center">Бронирование столика</h1>
-    <p class="lead text-center">Здесь можно забронировать данный столик (в форме можно выбрать любое
-        доступное время или доступный период).</p>
+    <p class="lead text-center">Здесь можно забронировать данный столик (в форме можно выбрать любое доступное время или доступный период).</p>
     <hr class="featurette-divider">
 
-<div class="row text-start text-center">
-    <div class="col-12">
-        <div class="card mb-4 box-shadow">
-            <div class="card-header">
-                {% if object %}
-                <h4 class="my-0 font-weight-normal">Обновить бронирование</h4>
-                {% else %}
-                <h4 class="my-0 font-weight-normal">Добавить новое бронирование</h4>
-                {% endif %}
-            </div>
-            <div class="card-body">
-                <form method="post" action="" class="form-floating" enctype="multipart/form-data">
-                    {% csrf_token %}
-                    {{ form.as_p }}
-                    <button type="submit" class="btn btn-outline-warning">
-                        {% if object %}
-                        Обновить
-                        {% else %}
-                        Добавить
+    <div class="row text-start text-center">
+        <div class="col-12">
+            <div class="card mb-4 box-shadow">
+                <div class="card-header">
+                    {% if object %}
+                    <h4 class="my-0 font-weight-normal">Обновить бронирование</h4>
+                    {% else %}
+                    <h4 class="my-0 font-weight-normal">Добавить новое бронирование</h4>
+                    {% endif %}
+                </div>
+                <div class="card-body">
+                    <form method="post" action="" class="form-floating" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        {% if form.non_field_errors %}
+                            <div class="alert alert-danger">
+                                {{ form.non_field_errors }}
+                            </div>
                         {% endif %}
-                    </button>
-                </form>
+                        <div class="mb-3">
+                            <label for="reservation_date">Дата бронирования</label>
+                            <input type="date" name="reservation_date" class="form-control" id="reservation_date" required>
+                        </div>
+                        <button type="submit" class="btn btn-outline-warning">
+                            {% if object %}
+                            Обновить
+                            {% else %}
+                            Добавить
+                            {% endif %}
+                        </button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
 </div>
-</div>
-{% endblock%}
+{% endblock %}

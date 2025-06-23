@@ -1,6 +1,6 @@
 {% extends 'service/base.html' %}
-{% block content %}
 
+{% block content %}
 <br>
 <br>
 <br>
@@ -13,27 +13,18 @@
                 <h4 class="my-0 font-weight-normal">{{ object.user }}</h4>
             </div>
             <div class="card-body">
-                <p class="mt-3 mb-4 text-start m-3">Вы забронировали {{object.table}}</p>
+                <p class="mt-3 mb-4 text-start m-3">Вы забронировали {{ object.table }}</p>
+                <p class="mt-3 mb-4 text-start m-3">Дата бронирования: {{ object.reservation_date }}</p>  <!-- Добавлено отображение даты -->
                 {% for time in object.order_time.all %}
-                <p class="mt-3 mb-4 text-start m-3">Время бронирования {{time}}</p>
+                <p class="mt-3 mb-4 text-start m-3">Время бронирования: {{ time }}</p>
                 {% endfor %}
                 <div class="btn-group">
-                    <a type="button" class="btn btn-secondary border-warning"
-                       href="{% url 'service:order_update' order.pk %}">
-                        Изменить
-                    </a>
-                    <a type="button" class="btn btn-danger"
-                       href="{% url 'service:order_delete' order.pk %}">
-                        Отменить
-                    </a>
-                </div>
-                {% endif %}
-                <div class="card-footer text-body-secondary mt-5">
-                    <a href="{% url 'users:my_cabinet' %}">Вернуться в личный кабинет</a>
+                    <a type="button" class="btn btn-secondary border-warning" href="{% url 'service:order_update' object.pk %}">Изменить</a>
+                    <a type="button" class="btn btn-danger" href="{% url 'service:order_delete' object.pk %}">Отменить</a>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
+{% endif %}
 {% endblock %}

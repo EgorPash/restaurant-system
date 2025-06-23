@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, DeleteView, UpdateView, ListView, DetailView
+from django.utils import timezone
 
 from service.forms import OrderForm
 from service.models import Order, Table
@@ -21,11 +22,19 @@ def contacts(request):
 def feedback(request):
     return render(request,'service/feedback.html')
 
+def table_gallery(request):
+    tables = Table.objects.all()  # Получаем все столики
+    return render(request, 'service/table_gallery.html', {'tables': tables})
+
 
 class TableListView(ListView):
     model = Table
     template_name = 'service/reservation_blank.html'
     paginate_by = 4
+
+    def get_queryset(self):
+        date = self.request.GET.get('date', timezone.now().date())
+        return Table.objects.exclude(id__in=Order.objects.filter(order_date=date).values_list('table', flat=True))
 
 
 class OrderCreateView(CreateView):
@@ -38,16 +47,26 @@ class OrderCreateView(CreateView):
         kwargs.update({'table_pk': self.kwargs.get('pk')})
         return kwargs
 
-    def form_valid(self, form):  # доработать
-        order = form.save()
+    def form_valid(self, form):
+        reservation_date = form.cleaned_data['reservation_date']
+        order_times = form.cleaned_data['order_time']
+
+        # Проверка на существующие заказы
+        existing_orders = Order.objects.filter(
+            table=self.kwargs.get('pk'),
+            reservation_date=reservation_date,
+            order_time__in=order_times
+        )
+
+        if existing_orders.exists():
+            form.add_error(None, "Этот столик уже забронирован на указанное время в выбранный день.")
+            return self.form_invalid(form)
+
+        order = form.save(commit=False)
         order.user = self.request.user
-        times_used = order.order_time.all()
-        used_table = Table.objects.get(pk=self.kwargs.get('pk'))
-        times_table = used_table.times.all()
-        used_table.times.set(times_table.difference(times_used))
-        used_table.save()
-        order.table = used_table
+        order.table = Table.objects.get(pk=self.kwargs.get('pk'))
         order.save()
+        order.order_time.set(order_times)  # Сохраняем выбранное время
         return super().form_valid(form)
 
 class OrderDeleteView(DeleteView):

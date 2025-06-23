@@ -1,0 +1,19 @@
+{% extends 'service/base.html' %}
+{% block content %}
+<div class="container mt-5">
+    <h1 class="text-center">Наши столики</h1>
+    <div class="row">
+        {% for table in tables %}
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <img src="{{ table.image.url }}" class="card-img-top" alt="Столик номер {{ table.number }}">
+                <div class="card-body">
+                    <h5 class="card-title">Столик номер: {{ table.number }}</h5>
+                    <p class="card-text">Количество мест: {{ table.seats }}</p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

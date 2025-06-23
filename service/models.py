@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.utils import timezone
 from my_project.settings import NULLABLE
 from users.models import User
 
@@ -21,6 +21,7 @@ class Table(models.Model):
     number = models.IntegerField(verbose_name='Номер столика')
     seats = models.IntegerField(verbose_name='Количество мест')
     times = models.ManyToManyField(TimeSection, **NULLABLE)
+    image = models.ImageField(upload_to='tables/', **NULLABLE)
 
     def __str__(self):
         return f'Столик номер: {self.number}'
@@ -35,7 +36,9 @@ class Order(models.Model):
     user = models.ForeignKey(User, on_delete=models.SET_NULL, verbose_name='заказчик', **NULLABLE)
     table = models.ForeignKey(Table, on_delete=models.SET_NULL, verbose_name='столик', **NULLABLE)
     order_time = models.ManyToManyField(TimeSection, verbose_name='время')
+    order_date = models.DateField(default=timezone.now, verbose_name='Дата бронирования')
     order_confirm = models.BooleanField(default=False, verbose_name='Поле подтверждения бронирования')
+    reservation_date = models.DateField(verbose_name='Дата бронирования', **NULLABLE)
 
     def __str__(self):
         return f'Заказ {self.id}'
