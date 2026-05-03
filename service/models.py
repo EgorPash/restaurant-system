@@ -20,7 +20,7 @@ class TimeSection(models.Model):
 class Table(models.Model):
     number = models.IntegerField(verbose_name='Номер столика')
     seats = models.IntegerField(verbose_name='Количество мест')
-    times = models.ManyToManyField(TimeSection, **NULLABLE)
+    times = models.ManyToManyField(TimeSection, blank=True)
     image = models.ImageField(upload_to='tables/', **NULLABLE)
 
     def __str__(self):
